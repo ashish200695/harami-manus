@@ -2,8 +2,10 @@ name: Post to Instagram
 
 on:
   schedule:
-    # Every hour, 10am-10pm IST (04:00-16:00 UTC).
-    - cron: "0 4-16 * * *"
+    # Every hour, 10am-10pm IST (04:07-16:07 UTC). Offset to :07 (not :00) since round-number
+    # minutes see the heaviest GitHub Actions scheduling congestion, where queued runs can be
+    # silently dropped entirely under load — this caused a real multi-hour posting gap.
+    - cron: "7 4-16 * * *"
   workflow_dispatch: {}
 
 permissions:

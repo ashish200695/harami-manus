@@ -2,8 +2,11 @@ name: Post to Facebook
 
 on:
   schedule:
-    # Every hour, 10am-10pm IST, offset 30 min from Instagram to avoid a push race.
-    - cron: "30 4-16 * * *"
+    # Every hour, 10am-10pm IST. Offset to :37 (not :30) since round-number minutes see the
+    # heaviest GitHub Actions scheduling congestion (queued runs can be silently dropped under
+    # load — this caused a real multi-hour posting gap). Still ~30 min from Instagram's :07 to
+    # avoid a push race.
+    - cron: "37 4-16 * * *"
   workflow_dispatch: {}
 
 permissions:
