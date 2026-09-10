@@ -1,0 +1,11 @@
+{
+  "name": "harami-manus",
+  "version": "1.0.0",
+  "description": "Anime clips auto-posting to Instagram and Facebook",
+  "type": "module",
+  "scripts": {
+    "sync": "node scripts/sync-videos.js",
+    "post": "node scripts/post-social.js"
+  },
+  "dependencies": {}
+}

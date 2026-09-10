@@ -1,0 +1,46 @@
+name: Post to Facebook
+
+on:
+  schedule:
+    # Every 2 hours, 10am-10pm IST, offset 30 min from Instagram to avoid a push race.
+    - cron: "30 4-16/2 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "harami-manus-git-write"
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Post to Facebook
+        env:
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FB_PAGE_ACCESS_TOKEN: ${{ secrets.FB_PAGE_ACCESS_TOKEN }}
+          SITE_BASE_URL: ${{ vars.SITE_BASE_URL }}
+          POST_PLATFORM: facebook
+        run: node scripts/post-social.js
+
+      - name: Commit posted-status update
+        run: |
+          git config user.name "harami-manus-bot"
+          git config user.email "actions@github.com"
+          git add data/videos.json
+          git diff --cached --quiet || git commit -m "Mark Facebook post status $(date -u +'%Y-%m-%d %H:%M UTC')"
+          for i in 1 2 3 4 5; do
+            git pull --rebase -X ours origin main && git push && break
+            echo "Push attempt $i failed, retrying..."
+            sleep 5
+          done
