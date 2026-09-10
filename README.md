@@ -13,8 +13,10 @@ auto-posting. No paid APIs, no hosting bill.
 2. GitHub Pages serves everything in `videos/` at a public URL, which both platforms'
    posting APIs need.
 3. `.github/workflows/post-instagram.yml` and `post-facebook.yml` each run on their own
-   schedule (every 2 hours, 10am-10pm IST, offset 30 min from each other to avoid a git-push
+   schedule (every hour, 10am-10pm IST, offset 30 min from each other to avoid a git-push
    race) and post the next not-yet-posted video to that platform via `scripts/post-social.js`.
+   At 13 posts/day per platform, the current 65-video bank lasts ~5 days before running dry —
+   keep the bank topped up (see "Adding new videos" below).
 4. The same video can be posted to both Instagram and Facebook — they track posted-status
    independently (`igPostedAt` / `fbPostedAt` per video).
 

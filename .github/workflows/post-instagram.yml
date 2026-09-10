@@ -2,8 +2,8 @@ name: Post to Instagram
 
 on:
   schedule:
-    # Every 2 hours, 10am-10pm IST (04:00-16:00 UTC).
-    - cron: "0 4-16/2 * * *"
+    # Every hour, 10am-10pm IST (04:00-16:00 UTC).
+    - cron: "0 4-16 * * *"
   workflow_dispatch: {}
 
 permissions:

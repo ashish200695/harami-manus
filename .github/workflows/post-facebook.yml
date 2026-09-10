@@ -2,8 +2,8 @@ name: Post to Facebook
 
 on:
   schedule:
-    # Every 2 hours, 10am-10pm IST, offset 30 min from Instagram to avoid a push race.
-    - cron: "30 4-16/2 * * *"
+    # Every hour, 10am-10pm IST, offset 30 min from Instagram to avoid a push race.
+    - cron: "30 4-16 * * *"
   workflow_dispatch: {}
 
 permissions:
